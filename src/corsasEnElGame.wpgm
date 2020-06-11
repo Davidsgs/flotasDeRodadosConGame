@@ -1,7 +1,23 @@
 import wollok.game.*
+import otrosRodados.*
+import colores.*
 
 program corsasEnElGame {
-	// hacer las inicializaciones necesarias 
+	
+	game.title("El Corsa")
+	game.height(5)
+	game.width(5)
+	const corsita = new ChevroletCorsa()
+	game.addVisual(corsita)
+	
+	keyboard.up().onPressDo({corsita.moverseArriba()})
+	
+    	keyboard.down().onPressDo({corsita.moverseAbajo()})
+    	keyboard.right().onPressDo({corsita.moverseDerecha()})
+    	keyboard.left().onPressDo({corsita.moverseIzquierda()})
+    	keyboard.v().onPressDo({corsita.image("autitoverde.png")})
+    	keyboard.a().onPressDo({corsita.image("autitoazul.png")})
+    	keyboard.r().onPressDo({corsita.image("autitorojo.png")})
 	
 	game.start()
 }

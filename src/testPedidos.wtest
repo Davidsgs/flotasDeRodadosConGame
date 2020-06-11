@@ -1,0 +1,24 @@
+import trafic.*
+import otrosRodados.*
+import dependencia.*
+import pedidos.*
+
+describe "Testeo de Pedidos"{
+	
+	const cachito = new ChevroletCorsa()
+	const pedido = new Pedido(distancia = 960, tiempoMaximo = 8, cantidadATransportar = 4)
+	
+	fixture{
+		cachito.setColor("Rojo")
+		pedido.addColores(["Azul","Negro"])
+	}
+	
+	test "Pedidos para cachito"{
+		assert.that(pedido.puedeHacerPedido(cachito))
+		pedido.addColores(["Rojo"])
+		pedido.cantidadATransportar(6)
+		assert.notThat(pedido.puedeHacerPedido(cachito))
+		pedido.tiempoMaximo(6)
+		assert.notThat(pedido.puedeHacerPedido(cachito))
+	}
+}

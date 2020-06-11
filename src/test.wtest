@@ -1,0 +1,77 @@
+import trafic.*
+import otrosRodados.*
+import dependencia.*
+
+describe "Test con 2 dependencias" {
+	
+	//Deporte
+	const deportes = new Dependencia()
+	const cachito = new ChevroletCorsa()
+	const corsa1 = new ChevroletCorsa() //Debe ser azul
+	const corsa2 = new ChevroletCorsa() //Debe ser verde
+	const kwid1 = new RenaultKwid() //Con tanque adicional
+	const autoEspecial = new AutoEspecial()
+	
+	//Cultura
+	const cultura = new Dependencia()
+	const kwid2 = new RenaultKwid()
+	const kwid3 = new RenaultKwid()
+	const kwid4 = new RenaultKwid() //Sin tanque
+	
+	fixture{
+		//--------.DEPORTES>
+		deportes.setEmpleados(45)
+		//Acomodamos los autos
+		cachito.setColor("Rojo")
+		corsa1.setColor("Azul")
+		corsa2.setColor("Verde")
+		kwid1.ponerTanque()
+		autoEspecial.setCapacidad(5)
+		autoEspecial.setVelocidadMaxima(160)
+		autoEspecial.setPeso(1200)
+		autoEspecial.setColor("Beige")
+		//Los añadimos
+		deportes.agregarAFlota(cachito)
+		deportes.agregarAFlota(corsa1)
+		deportes.agregarAFlota(corsa2)
+		deportes.agregarAFlota(kwid1)
+		deportes.agregarAFlota(autoEspecial)
+		
+		//<DEPORTES.--------
+		
+		//--------.CULTURA>
+		//Acomodamos los auto
+		cultura.setEmpleados(31)
+		kwid2.ponerTanque()
+		kwid3.ponerTanque()
+		kwid4.sacarTanque()
+		trafic.setInterior(interiorPopular)
+		trafic.setMotor(motorBataton)
+		//Los añadimos
+		cultura.agregarAFlota(cachito)
+		cultura.agregarAFlota(kwid2)
+		cultura.agregarAFlota(kwid3)
+		cultura.agregarAFlota(kwid4)
+		cultura.agregarAFlota(trafic)
+		//<CULTURA.--------
+	}
+	
+	test "Test de Dependencia: Deporte" {
+		assert.equals(6450, deportes.pesoTotalFlota())
+		assert.that(deportes.estaBienEquipada())
+		assert.equals(7,deportes.capacidadTotalEnColor("Azul"))
+		assert.equals("Beige",deportes.colorDelRodadoMasRapido())
+		assert.that(deportes.esGrande())
+		assert.equals(25,deportes.capacidadFaltante())
+	}
+	
+	test "Test de Dependencia: Cultura" {
+		assert.equals(10700, cultura.pesoTotalFlota())
+		assert.notThat(cultura.estaBienEquipada())
+		assert.equals(10,cultura.capacidadTotalEnColor("Azul"))
+		assert.equals("Rojo",cultura.colorDelRodadoMasRapido())
+		assert.notThat(cultura.esGrande())
+		assert.equals(5,cultura.capacidadFaltante())
+	}
+	
+}
